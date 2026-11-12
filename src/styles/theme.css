@@ -22,13 +22,48 @@
   --border: #ece9e9;
 }
 
-/* Dark theme values */
+/* Dark palette: charcoal surfaces, soft text, sea-glass accents. */
 [data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
-  --accent: #ff6b01;
-  --accent-foreground: #ffffff;
-  --muted: #343f60;
-  --muted-foreground: #afb9ca;
-  --border: #ab4b08;
+  color-scheme: dark;
+  --background: #111820;
+  --foreground: #d6e0eb;
+  --accent: #7dd3c7;
+  --accent-foreground: #112a29;
+  --muted: #202d3a;
+  --muted-foreground: #9daec1;
+  --border: #2b3948;
+}
+
+/* Give long articles a quieter hierarchy than the interactive accents. */
+[data-theme="dark"] {
+  body { background-color: var(--background); }
+
+  .app-prose {
+    --tw-prose-body: #c4d0df;
+    --tw-prose-headings: #edf3f8;
+    --tw-prose-bold: #edf3f8;
+    --tw-prose-quotes: #c4d0df;
+
+    :is(h1, h2, h3, h4, strong) { color: #edf3f8; }
+    :is(p, ol, ul, table) { color: #c4d0df; }
+    a { color: var(--accent); text-decoration-color: #507e7b; }
+    a:hover { color: #b3eee4; text-decoration-color: currentColor; }
+
+    table th { background-color: #1c2935; color: #e3ecf5; }
+    table tbody tr:nth-child(even) { background-color: #16222d; }
+    table :is(th, td) { border-color: var(--border); }
+
+    :not(pre) > code { background-color: #23333f; color: #b5e5d9; }
+    blockquote {
+      background-color: #17272c;
+      border-inline-start-color: #6fb8ad;
+      border-radius: 0 0.5rem 0.5rem 0;
+      padding: 0.75rem 1rem;
+      opacity: 1;
+    }
+    img { border-color: #304252; border-radius: 0.75rem; }
+  }
+
+  .app-prose .astro-code { background-color: #141f2b; border-color: var(--border); }
+  ::selection { background-color: #315d61; color: #f1fbf9; }
 }

@@ -20,7 +20,26 @@ function persist(): void {
   reflect();
 }
 
+// Article illustrations have authored dark variants, rather than a color filter.
+// Only this explicit asset set is swapped; photos and other images keep their colors.
+const themeIllustrations = new Set([
+  "llm-agent-cycle", "llm-service-architecture", "llm-tool-bridge",
+  "llm-stream-benchmark", "llm-operating-metrics", "llm-service-flow",
+]);
+
+function reflectIllustrations(): void {
+  for (const image of document.querySelectorAll<HTMLImageElement>("img")) {
+    const source = image.getAttribute("src");
+    if (!source) continue;
+    const match = source.match(/^(.*\/images\/)(llm-[a-z-]+?)(-dark)?\.svg$/);
+    if (!match || !themeIllustrations.has(match[2])) continue;
+    const next = `${match[1]}${match[2]}${themeValue === DARK ? "-dark" : ""}.svg`;
+    if (source !== next) image.setAttribute("src", next);
+  }
+}
+
 function reflect(): void {
+  reflectIllustrations();
   const root = document.firstElementChild;
   root?.setAttribute("data-theme", themeValue);
   root?.classList.toggle("dark", themeValue === DARK);
